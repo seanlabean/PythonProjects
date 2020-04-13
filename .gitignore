@@ -1,0 +1,5 @@
+# Ignore jupyter notebook dependencies
+.ipynb_checkpoints
+
+*.csv
+*.txt
