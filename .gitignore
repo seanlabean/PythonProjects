@@ -1,5 +1,8 @@
 # Ignore jupyter notebook dependencies
 .ipynb_checkpoints
+*.ipynb_checkpoints
+
+ReimannSolver/
 
 *.csv
 *.txt
