@@ -3,3 +3,7 @@
 
 *.csv
 *.txt
+*hdf5*
+*.png
+*.jpg
+*.log
