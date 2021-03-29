@@ -10,3 +10,4 @@ ReimannSolver/
 *.png
 *.jpg
 *.log
+*.pickle
