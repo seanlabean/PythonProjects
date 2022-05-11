@@ -162,7 +162,7 @@ def test_mpi_task(debug):
 
     if (rank == root):
         all_data = np.arange(10)
-        chunk_size = 3
+        chunk_size = 1
     pre = "Proc", rank
     args = [pre]
     kwargs = {'fancy':'very fancy'}
@@ -173,5 +173,5 @@ def test_mpi_task(debug):
     print "We're all done here"
 
 if (__name__ == '__main__'):
-    debug = False
+    debug = True
     test_mpi_task(debug)
