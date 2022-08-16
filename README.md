@@ -17,6 +17,9 @@ This only contains a small jupyter notebook where I wrote down some of my though
 ## HackerRank/
 [HackerRank](https://www.hackerrank.com/) is a website that pairs workers with potential employees. It also provides some coding interview practice problems. I thought I would start solving these as a means of practice. I stopped fairly early on as, at the time, it was still 2 years until I would be entering the job market and I since moved on to [leetcode](https://leetcode.com/) anyways.
 
+## LibraryOfBabel/
+Inspired by Jorge Borges' [Library of Babel](https://en.wikipedia.org/wiki/The_Library_of_Babel). The goal of this projejct is to make a very very simple python-based iOS app.
+
 ## MachineLearning/
 These are two projects I started to prove to myself I could build some sort of machine learning product. The first is a simple decision tree classifier model that determines whether an online article is "fake" or not. The second is the same style of linear regression applied to stock market prices, a classically foolish attempt to predict inherently stochastic market movement with a linear model. I now know so much more about machine learning, looking back at this attempt is certainly illuminating.
 
