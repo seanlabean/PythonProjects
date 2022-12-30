@@ -11,3 +11,5 @@ ReimannSolver/
 *.jpg
 *.log
 *.pickle
+
+*.rtf
