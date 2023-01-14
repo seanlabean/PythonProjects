@@ -26,9 +26,7 @@ def get_arvelie(incept, print_gregorian=False, print_arvelie=False, user_date=No
         now = datetime.now()
     else:
         dsplit = user_date.split('-')
-        print(dsplit)
         now = datetime(int(dsplit[-1]),  int(dsplit[-2]), int(dsplit[-3]))
-        print(now)
     year = now.year
     month = now.month
     day = now.day
@@ -59,13 +57,9 @@ if __name__ == "__main__":
                         help="Dont print Arvelie date format.")
 
     args = parser.parse_args()
-    incept = args.inception #int(input("What is your inception year? :: "))
-    ucd = args.date #str(input("Use current date? :: "))
+    incept = args.inception
+    ucd = args.date
     pgreg = args.print_gregorian
     parvel = args.print_arvelie
 
-    #if ucd in ['t', 'T', 'True', 'true', 'y', 'Y', 'Yes', 'yes']:
-    #    user_date=None
-    #else:
-    #    user_date = str(input("Give date (dd-mm-yyyy) :: ")).split('-')
     get_arvelie(incept, print_gregorian=pgreg, print_arvelie=parvel, user_date=ucd)
