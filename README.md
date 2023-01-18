@@ -1,9 +1,10 @@
 This is a continuously morphing repository acting essentially as a time machine and clunky storage of my various Python projects. Most Projects here are half-baked consisting of momentary interests that I persued and dropped within a week. There are also projects that piqued my interest enough to become separate efforts unto themselves. I provide links to the separately maintained git repository for such projects.
 
-## Arvelie/
-Arvelie is an alphabetic date format. The **Arvelie calendar** as **26 months** each consisting of **2 weeks** of **7 days** each. Each month's name corresponds to one of the 26 letters of the alphabet.
+## Svanne/
 
-The purpose of this special calendar is to record daily activity logs starting at year 0 when the tracking started. For example, if a blog was initiated in 2006 (which becomes its year 0), the arvelie date 13A05 is equivalent to January 6th of the 14th year.
+Svanne is an alphabetic date format. The **Svannic calendar** has **26 months** each consisting of **2 weeks** of **7 days** each. Each month's name corresponds to one of the 26 letters of the alphabet.
+
+The purpose of this special calendar is to record daily activity logs starting at year 0 when the tracking started. For example, if a blog was initiated in 2006 (which becomes its year 0), the arvelie date 13A05 is equivalent to January 6th of the 14th year after blog inception (2020).
 
 * **01D07** 2007-02-18
 * **02A00** 2008-01-01
