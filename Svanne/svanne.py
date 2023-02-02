@@ -1,22 +1,22 @@
 from datetime import datetime
 import argparse
 
-def get_atovos(incept, print_gregorian=False, print_atovos=False, user_date=None):
+def get_svanne(incept, print_gregorian=False, print_svanne=False, user_date=None):
     """
     Uses a numeric to alphabetic dictionary as well as the built-in
-    python datetime library to construct the current Atovostic date.
+    python datetime library to construct the current Svannic date.
     This script properly handles leap years.
 
     Inputs:
 
     incept          - the repository inception date.
     print_gregorian - prints the current gregorian date (default: False)
-    print_atovos   - prints the current atovostic date (default: False)
+    print_svanne   - prints the current svannic date (default: False)
     user_date       - if provided, overrides datetime.now() with proposed date (dd-mm-yyyy)
 
     Outputs:
 
-    atovos - atovos date code (string).
+    svanne - svanne date code (string).
     """
     alphabet = {0:"A", 1:"B", 2:"C", 3:"D", 4:"E", 5:"F", 6:"G", 7:"H", \
                 8:"I", 9:"J", 10:"K", 11:"L", 12:"M", 13:"N", 14:"O", \
@@ -37,12 +37,12 @@ def get_atovos(incept, print_gregorian=False, print_atovos=False, user_date=None
     day_of_year = now.timetuple().tm_yday - 1
     al_key = day_of_year // 14
 
-    atovos = "{:02d}{}{:02d}".format(year-incept,
+    svanne = "{:02d}{}{:02d}".format(year-incept,
                                       alphabet[al_key],
                                       day_of_year%14) 
-    if(print_atovos):
-        print("Atovos date: {}".format(atovos))
-    return atovos
+    if(print_svanne):
+        print("Svanne date: {}".format(svanne))
+    return svanne
 
 
 if __name__ == "__main__":
@@ -53,13 +53,13 @@ if __name__ == "__main__":
                         help="Date to convert. Must be in dd-mm-yyyy format.")
     parser.add_argument("-npg", "--no_print_gregorian", action="store_false",
                         help="Dont print Gregorian date format.")
-    parser.add_argument("-npa", "--no_print_atovos", action="store_false",
-                        help="Dont print Atovos date format.")
+    parser.add_argument("-nps", "--no_print_svanne", action="store_false",
+                        help="Dont print Svanne date format.")
 
     args = parser.parse_args()
     incept = args.inception
     ucd = args.date
     pgreg = args.no_print_gregorian
-    patov = args.no_print_atovos
+    psvan = args.no_print_svanne
 
-    get_atovos(incept, print_gregorian=pgreg, print_atovos=patov, user_date=ucd)
+    get_svanne(incept, print_gregorian=pgreg, print_svanne=psvan, user_date=ucd)
