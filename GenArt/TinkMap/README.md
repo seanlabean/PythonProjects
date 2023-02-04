@@ -3,7 +3,7 @@
 The
 
 <p align="center">
-![tinkerbell](./tinkerbell.png "Tinkerbell map")
+<img src="./tinkerbell.png" alt="Tinkerbell Map" style="width:100%; border:0;">
 </p>
 
 $$x_{n+1}=x_{n}^{2}-y_{n}^{2}+ax_{n}+by_{n}$$
