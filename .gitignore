@@ -2,14 +2,19 @@
 .ipynb_checkpoints
 *.ipynb_checkpoints
 
+# Ignore python fluff
+*.py~
+
 ReimannSolver/
 
 *.csv
 *.txt
 *hdf5*
 *.png
+!*tinkerbell.png
 *.jpg
 *.log
 *.pickle
-
+*.mp4
+*.mov
 *.rtf
