@@ -18,9 +18,7 @@ Because system values that approach the attractor values remain close even if sl
 
 Click here to watch the YouTube video:
 
-<p align="center">
 [![tinkerbell map link to youtube](http://img.youtube.com/vi/4flIhqo0rhc/0.jpg)](https://youtu.be/4flIhqo0rhc "The Tinkerbell Map")
-</p>
 
 This repository contains the following:
 * `main.py` - Calculates the tinkerbell map with 2e4 iterations by default. Saves the image as tink_0000.png in `/figures`.
