@@ -28,6 +28,15 @@ def tink(points,x,y,a,b,c,d):
     return xs,ys
 
 def make_plot(pltx, plty, num):
+    """
+    Generate white-on-black tinkerbell map.
+    By default saves image to ./figures
+    
+    Arguments:
+    
+    pltx - array of x coordinates.
+    plty - array of y coordinates.
+    """
     plt.figure(figsize=(16,9),facecolor="black")
     plt.scatter(pltx,plty,s=0.1,c="white")
     plt.axis('off')
@@ -43,4 +52,4 @@ if __name__ == "__main__":
     
     pltx,plty = tink(points,x,y,a,b,c,d)
     
-    make_plot(pltx,plty,0)
+    make_plot(pltx,plty,0) # num arg set to 0 to output only 1 image.
