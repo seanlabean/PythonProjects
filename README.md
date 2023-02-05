@@ -28,6 +28,9 @@ I started combing throught the textbook *Deep Learning From Scratch* by Seth Wei
 ## FileManipulation/
 This only contains a small jupyter notebook where I wrote down some of my thoughts and understandings pertaining to `pickle` objects in Python. I think I was looking into this because I wanted to pickle the tree data structures that I was building as part of my [AREPO-TORCH](https://github.com/seanlabean/AREPO-TORCH) data port. I also comment a bit on the `PROTOCOL` level which creates some issues when trying to mix pickles made with Python2.X with Python3.X.
 
+## GenArt/
+In an attempt to be more like [Devine Lu Linvega](100r.co) and Co. I want to start recording instances of my deep dives into Generative Art (a.k.a Procedural Art, Digital Art, etc.)
+
 ## HackerRank/
 [HackerRank](https://www.hackerrank.com/) is a website that pairs workers with potential employees. It also provides some coding interview practice problems. I thought I would start solving these as a means of practice. I stopped fairly early on as, at the time, it was still 2 years until I would be entering the job market and I since moved on to [leetcode](https://leetcode.com/) anyways.
 

@@ -25,3 +25,5 @@ This repository contains the following:
 * `plotLots.py` - Performs the  same task as main.py but recalculates the Map with a varied parameter and repeats, saving an image each time.
 
 Using `plotLots.py` you can create a series of 'related' frames yourself. I stitched mine together into a .mov using `ffmpeg`.
+
+This code requries `numpy` and `matplotlib` and was intended for python versions 3.X. Feel free to use any or all of this code.
