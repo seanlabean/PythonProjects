@@ -12,9 +12,9 @@ $$y_{n+1}=2x_{n}y_{n}+cx_{n}+dy_{n}$$
 <img src="./figures/tinkerbell.png" alt="Tinkerbell Map" style="width:80%; border:0;">
 </p>
 
-This particular Tinkerbell system is described by the parameters: `x_0 = -0.72; y_0 = -0.64; a = 0.90; b = -0.6013; c = 2.0; d = 0.50`
+This particular Tinkerbell system is defined by the parameters: `x_0 = -0.72; y_0 = -0.64; a = 0.90; b = -0.6013; c = 2.0; d = 0.50`
 
-Because system values that approach the attractor values remain close even if slightly disturbed, we can progressively vary parameters of the Tinkerbell system to observe how an identical starting position can result in significantly different patterns and create the illusion of motion/evolution.
+Because system values that approach the attractor values remain close even if slightly disturbed, the opposite is also true in that we can progressively vary parameters of the Tinkerbell system to observe how an identical starting position can result in significantly different patterns and create the illusion of motion/evolution.
 
 Click here to watch the YouTube video:
 
