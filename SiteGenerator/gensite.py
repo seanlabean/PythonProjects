@@ -1,5 +1,4 @@
 from time import time
-import markdown
 import glob
 
 file_in = "./demofile"
