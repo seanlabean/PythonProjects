@@ -42,7 +42,9 @@ def make_plot(pltx, plty, num):
     plt.axis('off')
     plt.xlim(-1.5,0.9)
     plt.ylim(-1.7,0.7)
-    plt.savefig("./figures/tink_"+str(num).zfill(4),bbox_inches='tight',facecolor="black")
+    plt.savefig("./figures/tink_"+str(num).zfill(4),
+                bbox_inches='tight',
+                facecolor="black")
     plt.close()
 
 if __name__ == "__main__":

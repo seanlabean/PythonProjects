@@ -12,6 +12,8 @@ ReimannSolver/
 *hdf5*
 *.png
 !*tinkerbell.png
+!*sonoshee_wp.png
+!*four-byte-burger.png
 *.jpg
 *.log
 *.pickle
