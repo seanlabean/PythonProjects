@@ -10,13 +10,26 @@ def conv_md(file_in,target,verbose=0):
     fout = open(target+file_in.split('.')[1]+'.html', "w")
     lines = f.readlines()
     # Check styling data
+    # TODO: pick up style and slice away these lines
     if lines[0] != '---':
         print("No file styling given...")
         if(verbose>1): print("Include --- block at head of file!")
     # Go line by line
-    for line in lines:
+    for i, line in enumerate(lines):
+        prev_line = lines[i-1] if i > 1 else None
+        next_line = lines[i-1] if i < len(lines) else None
+
         # Handle regular paragraphs first.
-        if(line[0] not in spec): fout.write('<p>'+line+'</p>\n')
+        # TODO: put paragraph handling and sub-jobs (like list generation) in separate file.
+        if (line[0] not in spec): fout.write('<p>'+line+'</p>\n')
+        if line[0] == '*' or line[0] == '-' and prev_line != None and next_line != None:
+            if prev_line[0] != '*' or prev_line[0] != '-':
+                fout.write('<ul>')
+            fout.write('<li>'+line[1:]+'</li>')
+            if next_line[0] != '*' or next_line[0] != '-':
+                fout.write('</ul>')
+        else:
+            pass
         # Headers
         h=0
         while line[0] == '#':
