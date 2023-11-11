@@ -23,17 +23,20 @@ class Generator():
             self.fout.write('<p>'+line+'</p>\n')
 
     def handle_list(self, i, line):
-        
-        if line[0] == '*' or line[0] == '-' and self.prev_line != None and self.next_line != None:
-            if self.prev_line[0] != '*' or self.prev_line[0] != '-':
+        in_list = False  # Track if we are inside a list
+        if (line[0] == '*' or line[0] == '-') and self.prev_line is not None and self.next_line is not None:
+            if self.prev_line[0] != '*' and self.prev_line[0] != '-':
                 self.fout.write('<ul>')
-            # check for and replace link text
+                in_list = True
+            # Check for and replace link text
             line = self.parse_line(i, line)
-            self.fout.write('<li>'+line[1:]+'</li>')
-            if self.next_line[0] != '*' or self.next_line[0] != '-':
+            self.fout.write('<li>' + line[1:] + '</li>')
+            if self.next_line[0] != '*' and self.next_line[0] != '-':
                 self.fout.write('</ul>')
+                in_list = False
         else:
-            pass
+            if not in_list:
+                self.fout.write('<p>' + line + '</p>')
 
     def handle_header(self, i, line):
         h=0
@@ -43,24 +46,15 @@ class Generator():
         if(h): self.fout.write('<h'+str(h)+'>'+line+'</h'+str(h)+'>\n')
 
     def parse_line(self, i, line):
-        def remove_empty_strings(string):
-            return string != ""
-        for s in self.lspec:
-            l = filter(remove_empty_strings, line.split(s))
-            n = ""
-            print(l)
-            if len(l) > 1 and len(l)%2 == 1:
-                # each odd index string has lspec applied
-                for q, seg in enumerate(l):
-                    if q%2 == 0:
-                        print(seg)
-                        print(self.lspec)
-                        print(self.lspec[s])
-                        seg = "<"+self.lspec[s]+">"+seg+"</"+self.lspec[s]+">"
-                    n += seg
-            else:
-                n = line
+        n = line
+        for s, tag in self.lspec.items():
+            segments = n.split(s)
+            if len(segments) > 1:
+                n = ""
+                for i, seg in enumerate(segments):
+                    if i % 2 == 0:
+                        n += seg
+                    else:
+                        n += f"<{tag}>{seg}</{tag}>"
         return n
-                    
-                    
-                    
+
