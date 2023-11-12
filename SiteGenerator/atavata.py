@@ -15,7 +15,7 @@ def init_site_file(lex_f):
     with open(DEST+'/'+fn+'.html', 'w') as f:
         return f, fn
 
-def parse_header(f, fn):
+def parse_header(f, fn, head, cat_dict):
     with open(DEST+'/'+fn+'.html', 'w') as f:
         f.write("<!DOCTYPE html><html lang='en'>")
         f.write("<header>")
@@ -40,17 +40,28 @@ def parse_header(f, fn):
         f.write("<header>")
         f.write("<a href='home.html'><img src='../media/interface/logo.svg' alt='" + NAME + "' height='50'></a>")
         f.write("</header>")
+        for line in head:
+            f.write(line)
         f.close()
 
-def parse_body(lex_f, fn):
+def parse_body(lex_f, fn, cat_dict):
     with open(lex_f) as inc:
-        with open(DEST+'/'+fn+'.html', 'a') as f:
-            # SLICE out and process header lines
-            parse_header(f, fn)
-            for line in inc.readlines():
-                
-                f.write(markdown.markdown(line))
-            f.close()
+        # SLICE out and process header lines
+        inc_lines = inc.readlines()
+        ind_head = [i for i, x in enumerate(inc_lines) if x == '---\n']
+        if len(ind_head) == 2:
+            # we have a header
+            head = inc_lines[ind_head[0] + 1:ind_head[1]]
+        else:
+            # no or erroneous head
+            head = []
+        body_lines = inc_lines[ind_head[1] + 1:]
+        inc.close()
+    with open(DEST+'/'+fn+'.html', 'a') as f:
+        parse_header(f, fn, head, cat_dict)
+        for line in body_lines:
+            f.write(markdown.markdown(line))
+        f.close()
 
 def write_footer(fn):
     with open(DEST+'/'+fn+'.html', 'a') as f:
@@ -59,6 +70,27 @@ def write_footer(fn):
         f.write("<b>Sean C. Lewis</b> © 2023 — ")
         f.write("<a href='" + LICENSE + "' target='_blank'>BY-NC-SA 4.0</a>")
         f.write("</footer>")
+
+def toc_dict(files):
+    # generate table of contents dictionary
+    return
+def preparse_header(lex_f, fn):
+    with open(lex_f) as inc:
+        # SLICE out and process header lines
+        inc_lines = inc.readlines()
+        ind_head = [i for i, x in enumerate(inc_lines) if x == '---\n']
+        categories = {}
+        if len(ind_head) == 2:
+            # we have a header
+            head = inc_lines[ind_head[0] + 1:ind_head[1]]
+            cat = [i for i, x in enumerate(head) if x.split(':')[0] == 'category']
+            categories[fn] = head[cat[0]].split(':')[-1].strip()
+        else:
+            # no or erroneous head
+            head = []
+        print(categories)
+        inc.close()
+    return categories
     
 def finalize(f, fn):
     try:
@@ -66,12 +98,16 @@ def finalize(f, fn):
     except:
         print(f"Error processing file {fn}")
 
-
 def engine():
     lex = lexicon()
+    # preprocess loop to get table of contents (which files belong to which catagories)
     for lex_f in lex:
         f, fn = init_site_file(lex_f)
-        parse_body(lex_f, fn)
+        cat_dict = preparse_header(lex_f, fn)
+    # main processing loop
+    for lex_f in lex:
+        f, fn = init_site_file(lex_f)
+        parse_body(lex_f, fn, cat_dict)
         write_footer(fn)
         finalize(f, fn)
 if __name__ == "__main__":
