@@ -52,10 +52,11 @@ def parse_body(lex_f, fn, cat_dict):
         if len(ind_head) == 2:
             # we have a header
             head = inc_lines[ind_head[0] + 1:ind_head[1]]
+            body_lines = inc_lines[ind_head[1] + 1:]
         else:
             # no or erroneous head
             head = []
-        body_lines = inc_lines[ind_head[1] + 1:]
+            body_lines = inc_lines
         inc.close()
     with open(DEST+'/'+fn+'.html', 'a') as f:
         parse_header(f, fn, head, cat_dict)
@@ -74,21 +75,22 @@ def write_footer(fn):
 def toc_dict(files):
     # generate table of contents dictionary
     return
-def preparse_header(lex_f, fn):
+def preparse_header(lex_f, fn, categories):
     with open(lex_f) as inc:
         # SLICE out and process header lines
         inc_lines = inc.readlines()
         ind_head = [i for i, x in enumerate(inc_lines) if x == '---\n']
-        categories = {}
         if len(ind_head) == 2:
             # we have a header
             head = inc_lines[ind_head[0] + 1:ind_head[1]]
             cat = [i for i, x in enumerate(head) if x.split(':')[0] == 'category']
-            categories[fn] = head[cat[0]].split(':')[-1].strip()
+            this_cat = head[cat[0]].split(':')[-1].strip()
+            categories.setdefault(this_cat, [])
+            #categories[fn] = head[cat[0]].split(':')[-1].strip()
+            categories[head[cat[0]].split(':')[-1].strip()].append(fn)
         else:
             # no or erroneous head
             head = []
-        print(categories)
         inc.close()
     return categories
     
@@ -101,13 +103,15 @@ def finalize(f, fn):
 def engine():
     lex = lexicon()
     # preprocess loop to get table of contents (which files belong to which catagories)
+    categories = {}
     for lex_f in lex:
         f, fn = init_site_file(lex_f)
-        cat_dict = preparse_header(lex_f, fn)
+        preparse_header(lex_f, fn, categories)
+    print(categories)
     # main processing loop
     for lex_f in lex:
         f, fn = init_site_file(lex_f)
-        parse_body(lex_f, fn, cat_dict)
+        parse_body(lex_f, fn, categories)
         write_footer(fn)
         finalize(f, fn)
 if __name__ == "__main__":
