@@ -5,8 +5,8 @@
 # Any and all of this code may be used by anyone for any purpose.
 # I prefer if you give credit if you believe it is due :)
 #
-from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QLineEdit, QPushButton, QTextEdit, QLabel
-from PyQt5.QtCore import QUrl
+from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QLineEdit, QPushButton, QLabel, QTextBrowser
+
 import requests
 from time import time
 
@@ -31,7 +31,10 @@ class Browser(QMainWindow):
         self.layout.addWidget(self.go_button)
         self.go_button.clicked.connect(self.load_page)
 
-        self.page_display = QTextEdit()
+        self.page_display = QTextBrowser()
+        self.page_display.setReadOnly(True)
+        self.page_display.setOpenExternalLinks(False)
+        self.page_display.anchorClicked.connect(self.handle_clicked_link)
         self.layout.addWidget(self.page_display)
 
         self.info_label = QLabel()
@@ -60,6 +63,22 @@ class Browser(QMainWindow):
         f"Headers Length: {headers_size} bytes\n"
         f"Parsed Content Length: {parsed_length} bytes\n"
         f"Time To Load: {tick-tock:.2f} seconds")
+
+        self.url_bar.setText(url)
+
+    def handle_clicked_link(self, url):
+        current_url_text = self.url_bar.text()
+        inc_url_text = url.toString()
+        if "https" in inc_url_text or "http" in inc_url_text():
+            url_str =inc_url_text()
+        else:
+            url_str = ""
+            for ext in current_url_text.split('/')[2:]:
+                if ext != current_url_text.split('/')[-1]:
+                    url_str += ext+"/"
+            url_str += inc_url_text()
+        self.url_bar.setText(url_str)
+        self.load_page()
 
 app = QApplication([])
 window = Browser()
