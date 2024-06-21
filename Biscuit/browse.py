@@ -5,8 +5,10 @@
 # Any and all of this code may be used by anyone for any purpose.
 # I prefer if you give credit if you believe it is due :)
 #
-from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QLineEdit, QPushButton, QTextEdit
+from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QLineEdit, QPushButton, QTextEdit, QLabel
+from PyQt5.QtCore import QUrl
 import requests
+from time import time
 
 from bs4 import BeautifulSoup
 
@@ -32,6 +34,9 @@ class Browser(QMainWindow):
         self.page_display = QTextEdit()
         self.layout.addWidget(self.page_display)
 
+        self.info_label = QLabel()
+        self.layout.addWidget(self.info_label)
+
     def load_page(self):
         """
         Load the web page content from the URL using the BeautifulSoup html parser.
@@ -39,9 +44,22 @@ class Browser(QMainWindow):
         url = self.url_bar.text()
         if not url.startswith("http"):
             url = "http://" + url
+        tock = time()
         response = requests.get(url)
+        content_length = len(response.content)
+        headers_size = sum(len(key) + len(value) for key, value in response.headers.items())
+        total_size = content_length + headers_size
+
         soup = BeautifulSoup(response.content, 'html.parser')
         self.page_display.setHtml(soup.prettify())
+        parsed_length = len(soup.prettify())
+        tick = time()
+
+        self.info_label.setText(f"Total Data Received: {total_size} bytes\n"
+        f"HTML Content Length: {content_length}\n"
+        f"Headers Length: {headers_size} bytes\n"
+        f"Parsed Content Length: {parsed_length} bytes\n"
+        f"Time To Load: {tick-tock:.2f} seconds")
 
 app = QApplication([])
 window = Browser()
