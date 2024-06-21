@@ -59,9 +59,9 @@ class Browser(QMainWindow):
         tick = time()
 
         self.info_label.setText(f"Total Data Received: {total_size} bytes\n"
-        f"HTML Content Size: {content_length}\n"
-        f"Headers Size: {headers_size} bytes\n"
-        f"Time To Load: {tick-tock:.2f} seconds")
+        f"HTML Content Size: {content_length} bytes\n"
+        f"Header Size: {headers_size} bytes\n"
+        f"Loaded In: {tick-tock:.2f} seconds")
 
         self.url_bar.setText(url)
 
