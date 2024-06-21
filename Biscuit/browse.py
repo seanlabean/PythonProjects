@@ -46,7 +46,7 @@ class Browser(QMainWindow):
         """
         url = self.url_bar.text()
         if not url.startswith("http"):
-            url = "http://" + url
+            url = "https://" + url
         tock = time()
         response = requests.get(url)
         content_length = len(response.content)
@@ -59,9 +59,8 @@ class Browser(QMainWindow):
         tick = time()
 
         self.info_label.setText(f"Total Data Received: {total_size} bytes\n"
-        f"HTML Content Length: {content_length}\n"
-        f"Headers Length: {headers_size} bytes\n"
-        f"Parsed Content Length: {parsed_length} bytes\n"
+        f"HTML Content Size: {content_length}\n"
+        f"Headers Size: {headers_size} bytes\n"
         f"Time To Load: {tick-tock:.2f} seconds")
 
         self.url_bar.setText(url)
@@ -69,14 +68,14 @@ class Browser(QMainWindow):
     def handle_clicked_link(self, url):
         current_url_text = self.url_bar.text()
         inc_url_text = url.toString()
-        if "https" in inc_url_text or "http" in inc_url_text():
-            url_str =inc_url_text()
+        if "https" in inc_url_text or "http" in inc_url_text:
+            url_str =inc_url_text
         else:
             url_str = ""
             for ext in current_url_text.split('/')[2:]:
-                if ext != current_url_text.split('/')[-1]:
+                if ext != current_url_text.split('/')[-1] or len(current_url_text.split('/')) == 3:
                     url_str += ext+"/"
-            url_str += inc_url_text()
+            url_str += inc_url_text
         self.url_bar.setText(url_str)
         self.load_page()
 
