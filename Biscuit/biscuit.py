@@ -59,6 +59,19 @@ class Browser(QMainWindow):
         theme_action.triggered.connect(self.change_theme)
         settings_menu.addAction(theme_action)
 
+        dark_theme = """
+        QWidget {
+        background-color: #2e2e2e;
+        color: #ffffff;
+        }
+        QTextGBrowser {
+        background-color: #1e1e1e;
+        color: #ffffff;
+        }"""
+        self.central_widget.setStyleSheet(dark_theme)
+        self.page_display.setStyleSheet(dark_theme)
+        self.info_label.setStyleSheet(dark_theme)
+
     def load_page(self):
         """
         Load the web page content from the URL using the BeautifulSoup html parser.
