@@ -5,7 +5,8 @@
 # Any and all of this code may be used by anyone for any purpose.
 # I prefer if you give credit if you believe it is due :)
 #
-from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QLineEdit, QPushButton, QLabel, QTextBrowser
+from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QLineEdit, QPushButton, QLabel, QTextBrowser, QGraphicsPixmapItem, QGraphicsScene
+from PyQt5.QtGui import QPixmap
 
 import requests
 from time import time
@@ -15,7 +16,7 @@ from bs4 import BeautifulSoup
 class Browser(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Biscuit")
+        self.setWindowTitle("BISCUIT")
 
         # Set up the window layout
         self.central_widget = QWidget()
@@ -36,6 +37,8 @@ class Browser(QMainWindow):
         self.page_display.setOpenExternalLinks(False)
         self.page_display.anchorClicked.connect(self.handle_clicked_link)
         self.layout.addWidget(self.page_display)
+        self.welcome_page = """<html><head></head><body><p>Welcome to BISCUIT ;)</p></body></html>"""
+        self.page_display.setHtml(self.welcome_page)
 
         self.info_label = QLabel()
         self.layout.addWidget(self.info_label)
