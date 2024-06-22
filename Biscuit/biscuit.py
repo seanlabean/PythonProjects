@@ -109,7 +109,22 @@ class Browser(QMainWindow):
                 QMessageBox.critical(self, "Error", f"Could not save page: {str(e)}")
     
     def change_theme(self):
-        return
+        current_theme = self.central_widget.styleSheet()
+        if current_theme:
+            theme_out = ""
+        else:
+            theme_out = """
+            QWidget {
+            background-color: #2e2e2e;
+            color: #ffffff;
+            }
+            QTextGBrowser {
+            background-color: #1e1e1e;
+            color: #ffffff;
+            }"""
+        self.central_widget.setStyleSheet(theme_out)
+        self.page_display.setStyleSheet(theme_out)
+        self.info_label.setStyleSheet(theme_out)
 
 app = QApplication([])
 window = Browser()
