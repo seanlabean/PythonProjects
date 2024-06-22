@@ -5,7 +5,7 @@
 # Any and all of this code may be used by anyone for any purpose.
 # I prefer if you give credit if you believe it is due :)
 #
-from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QLineEdit, QPushButton, QLabel, QTextBrowser, QAction
+from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QLineEdit, QPushButton, QLabel, QTextBrowser, QAction, QFileDialog, QMessageBox
 from PyQt5.QtGui import QPixmap
 
 import requests
@@ -97,6 +97,19 @@ class Browser(QMainWindow):
             url_str += inc_url_text
         self.url_bar.setText(url_str)
         self.load_page()
+
+    def save_page(self):
+        filename, _ = QFileDialog.getSaveFileName(self, "Save Page As", "", "HTML Files (*.html);;All Files (*)")
+        if filename:
+            try:
+                with open(filename, 'w', encoding='utf-8') as file:
+                    file.write(self.page_display.toHtml())
+                QMessageBox.information(self, "Success", f"Page saved successfully to {filename}")
+            except Exception as e:
+                QMessageBox.critical(self, "Error", f"Could not save page: {str(e)}")
+    
+    def change_theme(self):
+        return
 
 app = QApplication([])
 window = Browser()
