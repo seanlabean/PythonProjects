@@ -1,5 +1,7 @@
 # BISCUIT
 
+![biscuit logo](biscuit.png "BISCUIT")
+
 Biscuit is a bite-sized (haha) browser which performs the absolute minimum required to render a website.
 
 It relies on the PyQt5 and BeautifulSoup libraries.
