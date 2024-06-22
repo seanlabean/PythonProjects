@@ -10,6 +10,8 @@ It relies on the PyQt5 and BeautifulSoup libraries.
 
 Type in a url of your choice (you may omit http(s)://) click Go and start your browsing adventure! Resize the window as needed.
 
+At any point you may save the HTML content of the current page to a local file by using the menu bar at the top of the window. There you may also toggle the theme from dark to light and back.
+
 ## Inspiration
 
 For several years I have built a personal website of mine with the intentiion of using almost entirely html and css with as little javascript as possible in order to convey information with the most efficient idea/Watt ratio possible. These days if you want to look at a recipe for chocolate chip cookies, you are forced to download hundreds of megabytes of personalized adds, and scipts for popups and dialog boxes; a disgustingly large amount of bloat. If you are unfortunate enough to have a suboptimal internet connection, you wont be making cookies anytime soon. Websites sadly have no need to be "skinny". For the most part, a 200MB page loads fast enough for most people. But what a waste it is.
