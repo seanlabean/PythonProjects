@@ -5,7 +5,7 @@
 # Any and all of this code may be used by anyone for any purpose.
 # I prefer if you give credit if you believe it is due :)
 #
-from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QLineEdit, QPushButton, QLabel, QTextBrowser, QGraphicsPixmapItem, QGraphicsScene
+from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QLineEdit, QPushButton, QLabel, QTextBrowser, QAction
 from PyQt5.QtGui import QPixmap
 
 import requests
@@ -28,10 +28,12 @@ class Browser(QMainWindow):
         self.url_bar = QLineEdit()
         self.layout.addWidget(self.url_bar)
 
+        # Go button and actions
         self.go_button = QPushButton("Go")
         self.layout.addWidget(self.go_button)
         self.go_button.clicked.connect(self.load_page)
 
+        # Init page display and welcome message
         self.page_display = QTextBrowser()
         self.page_display.setReadOnly(True)
         self.page_display.setOpenExternalLinks(False)
@@ -40,8 +42,22 @@ class Browser(QMainWindow):
         self.welcome_page = """<html><head></head><body><p>Welcome to BISCUIT ;)</p></body></html>"""
         self.page_display.setHtml(self.welcome_page)
 
+        # Data info label
         self.info_label = QLabel()
         self.layout.addWidget(self.info_label)
+
+        # Menu bar options
+        menu_bar = self.menuBar()
+
+        file_menu = menu_bar.addMenu("File")
+        save_action = QAction("Save Page As", self)
+        save_action.triggered.connect(self.save_page)
+        file_menu.addAction(save_action)
+
+        settings_menu = menu_bar.addMenu("Settings")
+        theme_action = QAction("Change Theme", self)
+        theme_action.triggered.connect(self.change_theme)
+        settings_menu.addAction(theme_action)
 
     def load_page(self):
         """
