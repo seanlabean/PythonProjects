@@ -39,7 +39,7 @@ class Browser(QMainWindow):
         self.page_display.setOpenExternalLinks(False)
         self.page_display.anchorClicked.connect(self.handle_clicked_link)
         self.layout.addWidget(self.page_display)
-        self.welcome_page = """<html><head></head><body><p>Welcome to BISCUIT ;)</p><p>BISCUIT is free to use and is open source. Feel free to contribute to or repurpose.</p><p>You may save the HTML content of any page you visit via the menu bar.</p><p>Happy Browsing!</p><p>Written by S. C. Lewis</p></body></html>"""
+        self.welcome_page = """<html><head></head><body><p>Welcome to <code>BISCUIT</code> ;)</p><p>You are now using a free and open source tool. Feel free to contribute to or repurpose.</p><p>You may save the HTML content of any page you visit via the menu bar.</p><p>Happy Browsing!</p><p>Written by S. C. Lewis</p></body></html>"""
         self.page_display.setHtml(self.welcome_page)
 
         # Data info label
