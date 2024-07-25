@@ -1,6 +1,8 @@
 from PIL import Image
 import numpy as np
 from scipy.ndimage import sobel
+import random
+# sonoshee: Pixel Sorting
 
 def sort_rows(pixels, width):
     """Given an image, sort the pixels in each row based on the sum of their RGB values."""
@@ -82,23 +84,25 @@ def sort_non_edge_sections(image, edge_mask, min_section_length):
             start_idx = end_idx
     return pixels
 
-im = Image.open('./sonoshee_wp.png', 'r')
+im = Image.open('/Users/sean/GitRepos/PythonProjects/GenArt/PixelSort/sonoshee_wp.png', 'r') #'./sonoshee_wp.png'
 im = im.convert('RGBA')
 
 edge_magnitude = detect_edges(im)
 edge_mask = create_edge_mask(edge_magnitude, threshold=355)  # Adjust threshold as needed
+lengths = [20, 50, 75, 100, 125, 150, 200, 300, 400]
+for i in range(0, len(lengths)):
+    min_section_length = random.choice(lengths)
+    sorted_pix_val = sort_non_edge_sections(im, edge_mask, min_section_length)
 
-min_section_length = 50
-sorted_pix_val = sort_non_edge_sections(im, edge_mask, min_section_length)
+    # Optional: Display the edge mask
+    #edge_mask_image = Image.fromarray((edge_mask * 255).astype('uint8'))
+    #edge_mask_image.save('./edge_mask.png')
 
-# Display the edge mask
-edge_mask_image = Image.fromarray((edge_mask * 255).astype('uint8'))
-edge_mask_image.save('./edge_mask.png')
+    # Optional: Display edge magnitude
+    #edge_magnitude_image = Image.fromarray(edge_magnitude.astype('uint8'))
+    #edge_magnitude_image.save('./edge_magnitude.png')
 
-# Optional: Display edge magnitude
-edge_magnitude_image = Image.fromarray(edge_magnitude.astype('uint8'))
-edge_magnitude_image.save('./edge_magnitude.png')
-
-# Step 4: Combine Edge and Non-Edge Regions and Save Image
-sorted_image = Image.fromarray(sorted_pix_val.astype('uint8'), 'RGBA')
-sorted_image.save('./sorted_sonoshee_wp_edge_sorted.png')
+    # Step 4: Combine Edge and Non-Edge Regions and Save Image
+    sorted_image = Image.fromarray(sorted_pix_val.astype('uint8'), 'RGBA')
+    sorted_image.save(f'/Users/sean/GitRepos/PythonProjects/GenArt/PixelSort/output/{i}.png')
+    print(f"Saved {i}.png")
