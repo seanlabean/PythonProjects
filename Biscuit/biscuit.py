@@ -7,6 +7,7 @@
 #
 from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QLineEdit, QPushButton, QLabel, QTextBrowser, QAction, QFileDialog, QMessageBox
 from PyQt5.QtGui import QPixmap
+import openai
 
 import requests
 from time import time
@@ -30,8 +31,11 @@ class Browser(QMainWindow):
 
         # Go button and actions
         self.go_button = QPushButton("Go")
+        self.prompt_button = QPushButton("Poetify")
         self.layout.addWidget(self.go_button)
         self.go_button.clicked.connect(self.load_page)
+        self.layout.addWidget(self.prompt_button)
+        self.prompt_button.clicked()
 
         # Init page display and welcome message
         self.page_display = QTextBrowser()
@@ -86,6 +90,10 @@ class Browser(QMainWindow):
         total_size = content_length + headers_size
 
         soup = BeautifulSoup(response.content, 'html.parser')
+        # Remove <figure> and <img> tags
+        for tag in soup(['figure', 'img']):
+            tag.decompose()  # This will remove the tag from the HTML
+
         self.page_display.setHtml(soup.prettify())
         parsed_length = len(soup.prettify())
         tick = time()
@@ -110,6 +118,16 @@ class Browser(QMainWindow):
             url_str += inc_url_text
         self.url_bar.setText(url_str)
         self.load_page()
+
+    # Function to send parsed HTML to ChatGPT and get a summary
+    def summarize_html(html_text):
+        prompt = f"Summarize this: {html_text[:2000]}"  # Limiting to 2000 characters
+        response = openai.Completion.create(
+            model="text-davinci-003",
+            prompt=prompt,
+            max_tokens=150
+        )
+        return response['choices'][0]['text'].strip()
 
     def save_page(self):
         filename, _ = QFileDialog.getSaveFileName(self, "Save Page As", "", "HTML Files (*.html);;All Files (*)")
