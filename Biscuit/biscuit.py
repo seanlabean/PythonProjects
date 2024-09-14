@@ -35,7 +35,7 @@ class Browser(QMainWindow):
         self.layout.addWidget(self.go_button)
         self.go_button.clicked.connect(self.load_page)
         self.layout.addWidget(self.prompt_button)
-        self.prompt_button.clicked()
+        self.prompt_button.clicked.connect(self.prompt_html)
 
         # Init page display and welcome message
         self.page_display = QTextBrowser()
@@ -89,9 +89,9 @@ class Browser(QMainWindow):
         headers_size = sum(len(key) + len(value) for key, value in response.headers.items())
         total_size = content_length + headers_size
 
-        soup = BeautifulSoup(response.content, 'html.parser')
+        soup = BeautifulSoup(response.content, "html.parser")
         # Remove <figure> and <img> tags
-        for tag in soup(['figure', 'img']):
+        for tag in soup(["figure", "img"]):
             tag.decompose()  # This will remove the tag from the HTML
 
         self.page_display.setHtml(soup.prettify())
@@ -120,14 +120,24 @@ class Browser(QMainWindow):
         self.load_page()
 
     # Function to send parsed HTML to ChatGPT and get a summary
-    def summarize_html(html_text):
-        prompt = f"Summarize this: {html_text[:2000]}"  # Limiting to 2000 characters
-        response = openai.Completion.create(
-            model="text-davinci-003",
-            prompt=prompt,
-            max_tokens=150
+    def prompt_html(self):
+        #self.page_display.setPlainText("Psych!")
+        client = openai.OpenAI()
+        html_text = self.page_display.toPlainText()
+
+        prompt = f"Embody the skills of the most skilled poets througout history and condense the following into a simple yet powerful poem: {html_text[:2000]}"  # Limiting to 2000 characters
+        completion = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": "You are a masterful poet and assistant."},
+                {
+                    "role": "user",
+                    "content": f"Write a short but powerful poem based on the following text: {prompt}"
+                }
+            ]
         )
-        return response['choices'][0]['text'].strip()
+        self.page_display.setPlainText(completion.choices[0].message)
+
 
     def save_page(self):
         filename, _ = QFileDialog.getSaveFileName(self, "Save Page As", "", "HTML Files (*.html);;All Files (*)")
