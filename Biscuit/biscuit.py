@@ -5,8 +5,8 @@
 # Any and all of this code may be used by anyone for any purpose.
 # I prefer if you give credit if you believe it is due :)
 #
-from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QLineEdit, QPushButton, QLabel, QTextBrowser, QAction, QFileDialog, QMessageBox
-from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QLineEdit, QPushButton, QLabel, QTextBrowser, QAction, QFileDialog, QMessageBox, QComboBox
+from PyQt5.QtGui import QPixmap, QIcon
 import openai
 
 import requests
@@ -31,9 +31,16 @@ class Browser(QMainWindow):
 
         # Go button and actions
         self.go_button = QPushButton("Go")
-        self.prompt_button = QPushButton("Poetify")
+        self.aiprompts = QComboBox()
+        self.aiprompts.addItem('Summarize')
+        self.aiprompts.addItem('Poetify')
+        self.aiprompts.addItem('Roast')
+        self.aiprompts.addItem('Similar Links')
+        self.prompt_button = QPushButton("AI that shit")
+
         self.layout.addWidget(self.go_button)
         self.go_button.clicked.connect(self.load_page)
+        self.layout.addWidget(self.aiprompts)
         self.layout.addWidget(self.prompt_button)
         self.prompt_button.clicked.connect(self.prompt_html)
 
@@ -121,8 +128,10 @@ class Browser(QMainWindow):
 
     # Function to send parsed HTML to ChatGPT and get a summary
     def prompt_html(self):
-        #self.page_display.setPlainText("Psych!")
-        client = openai.OpenAI()
+        client = openai.OpenAI(
+            organization="yyy",
+            project="zzz"
+        )
         html_text = self.page_display.toPlainText()
 
         prompt = f"Embody the skills of the most skilled poets througout history and condense the following into a simple yet powerful poem: {html_text[:2000]}"  # Limiting to 2000 characters
@@ -136,7 +145,7 @@ class Browser(QMainWindow):
                 }
             ]
         )
-        self.page_display.setPlainText(completion.choices[0].message)
+        self.page_display.setPlainText(completion.choices[0].message.content.strip())
 
 
     def save_page(self):
@@ -170,4 +179,5 @@ class Browser(QMainWindow):
 app = QApplication([])
 window = Browser()
 window.show()
+app.setWindowIcon(QIcon("biscuit.png"))
 app.exec_()
